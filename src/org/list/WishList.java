@@ -1,11 +1,29 @@
 package org.list;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class WishList {
     public static void main(String[] args) {
+        //file txt
         File root = new File("./resources/wish-list.txt");
+
+        String myWishList = null;
+        try {
+            //recuperare dati nel file
+            Scanner readingFile = new Scanner(root);
+            //finchè readingFile ha una linea
+            while (readingFile.hasNextLine()){
+                myWishList = readingFile.nextLine().replaceAll("- ","");
+            }
+            readingFile.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         Scanner scan = new Scanner(System.in);
         List<String> gifts = new ArrayList<>();
         boolean exit = false;
@@ -30,9 +48,19 @@ public class WishList {
         //ordinare la lista
         Collections.sort(gifts);
 
-        System.out.println("On your wish list are:");
-        for (String singleGift : gifts){
-            System.out.println("- "+singleGift);
+        try {
+            //percorso dove scrivere
+            FileWriter fileWriter = new FileWriter(root);
+
+            System.out.println("On your wish list are:");
+            for (String singleGift : gifts){
+                //scrivi nel file
+                fileWriter.write("- "+singleGift +"\n");
+                System.out.println("- "+singleGift);
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         scan.close();
