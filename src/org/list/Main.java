@@ -1,10 +1,7 @@
 package org.list;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,6 +26,9 @@ public class Main {
                 exit = true;
             }
         } while (!exit);
+
+        //ordinare la lista
+        Collections.sort(gifts);
 
         System.out.println("On your wish list are:");
         for (String singleGift : gifts){
