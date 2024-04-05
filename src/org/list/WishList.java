@@ -10,14 +10,15 @@ public class WishList {
     public static void main(String[] args) {
         //file txt
         File root = new File("./resources/wish-list.txt");
+        List<String> myWishList  = new ArrayList<>();
 
-        String myWishList = null;
         try {
             //recuperare dati nel file
             Scanner readingFile = new Scanner(root);
             //finchè readingFile ha una linea
             while (readingFile.hasNextLine()){
-                myWishList = readingFile.nextLine().replaceAll("- ","");
+                //aggiungo nella myWishList  i file txt
+                myWishList.add(readingFile.nextLine().replaceAll("- ",""));
             }
             readingFile.close();
         } catch (FileNotFoundException e) {
@@ -25,17 +26,16 @@ public class WishList {
         }
 
         Scanner scan = new Scanner(System.in);
-        List<String> gifts = new ArrayList<>();
         boolean exit = false;
         do {
             System.out.println("Which gift you would like to add to your wish list:");
             String gift = scan.nextLine();
 
             //aggiungi gift all'array gifts
-            gifts.add(gift);
+            myWishList .add(gift);
 
             //ogni iterazione deve mostrare la lunghezza della lista
-            System.out.println("On your wish list are " + gifts.size() + " gifts");
+            System.out.println("On your wish list are " + myWishList .size() + " gifts");
 
             System.out.println("would you like to add more gifts? Y/N");
             String addGiftOrNo = scan.nextLine().toUpperCase();
@@ -46,14 +46,14 @@ public class WishList {
         } while (!exit);
 
         //ordinare la lista
-        Collections.sort(gifts);
+        Collections.sort(myWishList );
 
         try {
             //percorso dove scrivere
             FileWriter fileWriter = new FileWriter(root);
 
             System.out.println("On your wish list are:");
-            for (String singleGift : gifts){
+            for (String singleGift : myWishList ){
                 //scrivi nel file
                 fileWriter.write("- "+singleGift +"\n");
                 System.out.println("- "+singleGift);
